@@ -1,6 +1,6 @@
 # DB設計
 
-##usersテーブル
+## usersテーブル
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
@@ -12,7 +12,7 @@
 - has_many :groups_users
 - has_many :groups, through: groups_users
 
-##groupsテーブル
+## groupsテーブル
 |Column|Type|Options|
 |------|----|-------|
 |groupname|text|null: false|
@@ -22,7 +22,7 @@
 - has_many :groups_users
 - has_many :users, through: groups_users
 
-##messagesテーブル
+## messagesテーブル
 |Column|Type|Options|
 |------|----|-------|
 |body|text|null: false|
