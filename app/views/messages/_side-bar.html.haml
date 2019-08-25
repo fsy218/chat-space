@@ -5,7 +5,7 @@
         =current_user.name
       %ul.side-header__box__lists
         %li.list
-          =link_to do
+          =link_to new_group_path do
             = fa_icon 'edit', class: 'icon'
         %li.list
           =link_to edit_user_path(current_user) do
@@ -13,12 +13,9 @@
 
   .groups
     .group
-      .group__group-name
-        test-group
-      .group__latest-message
-        さようなら
-    .group
-      .group__group-name
-        sample-group
-      .group__latest-message
-        hello!
+      - current_user.groups.each do |group|
+        = link_to '#' do
+          .group__group-name
+            = group.name
+          .group__latest-message
+            さようなら
