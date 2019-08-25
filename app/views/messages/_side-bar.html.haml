@@ -1,0 +1,24 @@
+.chat-side
+  .side-header
+    .side-header__box
+      %h3.side-header__box__user-name
+        test-user
+      %ul.side-header__box__lists
+        %li.list
+          =link_to do
+            = fa_icon 'edit', class: 'icon'
+        %li.list
+          =link_to do
+            = fa_icon 'cog', class: 'icon'
+
+  .groups
+    .group
+      .group__group-name
+        test-group
+      .group__latest-message
+        さようなら
+    .group
+      .group__group-name
+        sample-group
+      .group__latest-message
+        hello!
