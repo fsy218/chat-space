@@ -5,20 +5,17 @@
         =current_user.name
       %ul.side-header__box__lists
         %li.list
-          =link_to do
+          =link_to new_group_path do
             = fa_icon 'edit', class: 'icon'
         %li.list
           =link_to edit_user_path(current_user) do
             = fa_icon 'cog', class: 'icon'
 
   .groups
-    .group
-      .group__group-name
-        test-group
-      .group__latest-message
-        さようなら
-    .group
-      .group__group-name
-        sample-group
-      .group__latest-message
-        hello!
+    - current_user.groups.each do |group|
+      .group
+        = link_to group_messages_path(group) do
+          .group__name
+            = group.name
+          .group__message
+            メッセージはまだありません。

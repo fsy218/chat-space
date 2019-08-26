@@ -34,12 +34,14 @@
     background-color: #2F3E51;
     .group {
       box-sizing: border-box;
-      margin-bottom: 40px;
-      &__group-name {
+      padding-bottom: 40px;
+      &__name {
+        color: #fff;
         margin-bottom: 5px;
         font-size: 15px;
       }
-      &__latest-message {
+      &__message {
+        color: #fff;
         font-size: 11px;
       }
     }
