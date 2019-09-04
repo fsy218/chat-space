@@ -3,7 +3,7 @@ $(function(){
     var html = `<div class="message">
                   <div class="message__upper-info">
                     <div class="message__upper-info__talker">
-                      ${message.user.name}
+                      ${message.name}
                     </div>
                     <div class="message__upper-info__date">
                       ${message.created_at}
@@ -13,7 +13,7 @@ $(function(){
                     <p class="message__lower-info__body">
                       ${message.body}
                     </p>
-                    ${message.image}
+                      <image=${message.image}, class: 'message__lower-info__image' if message.image.present? >
                   </div>
                 </div>`
     return html;
@@ -31,10 +31,13 @@ $(function(){
       processData: false,
       contentType: false
     })
-    .done(function(message){
-      var html = buildHTML(message);
-      $('.messages').append(html)
-      $('massage_body').val('')
+    .done(function(data){
+      var html = buildHTML(data);
+      $('.messages').append(html);
+      $('form')[0].reset();
+      var $scrollAuto = $('.messages');
+      $scrollAuto.animate({scrollTop: $scrollAuto[0].scrollHeight}, 'fast');
+      $('.submit-btn').attr('disabled', false);
     })
     .fail(function(){
       alert('error');
