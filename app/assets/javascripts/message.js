@@ -6,7 +6,7 @@ $(function(){
                       ${message.name}
                     </div>
                     <div class="message__upper-info__date">
-                      ${message.created_at}
+                      ${message.datetime}
                     </div>
                   </div>
                   <div class="message__lower-info">
