@@ -19,12 +19,19 @@ $(function(){
     return html;
   }
 
+  function formInitialize() {
+    $('form')[0].reset();
+    var $scrollAuto = $('.messages');
+    $scrollAuto.animate({scrollTop: $scrollAuto[0].scrollHeight}, 'fast');
+    $('.submit-btn').attr('disabled', false);
+  }
+
   $('#new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
     var url = $(this).attr('action')
     $.ajax({
-      url: url,
+      url: 'test notfound.php',
       type: "POST",
       data: formData,
       dataType: 'json',
@@ -34,12 +41,10 @@ $(function(){
     .done(function(data){
       var html = buildHTML(data);
       $('.messages').append(html);
-      $('form')[0].reset();
-      var $scrollAuto = $('.messages');
-      $scrollAuto.animate({scrollTop: $scrollAuto[0].scrollHeight}, 'fast');
-      $('.submit-btn').attr('disabled', false);
+      formInitialize();
     })
     .fail(function(){
+      formInitialize();
       alert('error');
     })
   });
