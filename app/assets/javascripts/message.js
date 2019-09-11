@@ -1,6 +1,7 @@
-$(function(){
+$(document).on('turbolinks:load', function(){
   function buildHTML(message) {
-    var html = `<div class="message">
+    var img = (message.image)? `<img class= "message__lower-info__image" src=${message.image} >` : "";
+    var html = `<div class="message" data-message-id="${message.id}">
                   <div class="message__upper-info">
                     <div class="message__upper-info__talker">
                       ${message.name}
@@ -13,17 +14,14 @@ $(function(){
                     <p class="message__lower-info__body">
                       ${message.body}
                     </p>
-                      <image=${message.image}, class: 'message__lower-info__image' if message.image.present? >
+                    ${img}
                   </div>
                 </div>`
     return html;
   }
 
-  function formInitialize() {
-    $('form')[0].reset();
-    var $scrollAuto = $('.messages');
-    $scrollAuto.animate({scrollTop: $scrollAuto[0].scrollHeight}, 'fast');
-    $('.submit-btn').attr('disabled', false);
+  function scroll() {
+    $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast')
   }
 
   $('#new_message').on('submit', function(e){
@@ -39,14 +37,45 @@ $(function(){
       contentType: false
     })
     .done(function(data){
+      if (data.length !== 0) {
       var html = buildHTML(data);
       $('.messages').append(html);
-      formInitialize();
+      $('.submit-btn').prop('disabled', false);
+      scroll();
+      $('#new_message')[0].reset();
+      }
+      else {
+        alert('メッセージを入力してください');
+        $('.submit-btn').prop('disabled', false);
+      }
     })
     .fail(function(){
-      formInitialize();
       alert('error');
     })
   });
+
+  var autoupdate = setInterval(function() {
+    if (location.pathname.match(/\/groups\/\d+\/messages/)) {
+      var last_message_id = $('.message:last').data("message");
+      $.ajax({
+        url: location.pathname,
+        type: 'get',
+        dataType: 'json',
+        data: {id: last_message_id}
+      })
+      .done(function(messages) {
+        messages.forEach(function(message) {
+          $('.massages').append(buildHTML(message));
+        })
+        scroll();
+      })
+      .fail(function(messages) {
+        alert('自動更新に失敗しました');
+      })
+    }
+    else {
+      clearInterval(interval);
+    }
+  }, 500000 );
 });
 
