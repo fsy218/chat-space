@@ -56,8 +56,8 @@ $(document).on('turbolinks:load', function(){
 
   var autoupdate = setInterval(function() {
     if (location.pathname.match(/\/groups\/\d+\/messages/)) {
-      var last_message_id = $(".message").last().data("message");
-      debugger;
+      var last_message_id = $(".message").last().data("message").id;
+      console.log(last_message_id);
       $.ajax({
         url: location.pathname,
         type: "GET",
@@ -65,18 +65,24 @@ $(document).on('turbolinks:load', function(){
         data: {id: last_message_id}
       })
       .done(function(data) {
+        debugger;
+        console.log("results : " + data);
         data.forEach(function(message) {
           $('.massages').append(buildHTML(message));
           scroll();
         })
       })
-      .fail(function() {
+      .fail(function(jqXHR, textStatus, errorThrown) {
         alert('自動更新に失敗しました');
+        console.log("ajax通信に失敗しました");
+        console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
+        console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
+        console.log("errorThrown    : " + errorThrown.message); // 例外情報
       })
     }
-    else {
-      clearInterval(interval);
-    }
+    // else {
+    //   clearInterval(interval);
+    // }
   }, 5000 )
 });
 
