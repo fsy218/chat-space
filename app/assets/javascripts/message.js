@@ -1,6 +1,6 @@
 $(document).on('turbolinks:load', function(){
   function buildHTML(message) {
-    var img = (message.image)? `<img class= "message__lower-info__image" src=${message.image} >` : "";
+    var img = message.image ? `<img class= "message__lower-info__image" src=${message.image} >` : "";
     var html = `<div class="message" data-message-id="${message.id}">
                   <div class="message__upper-info">
                     <div class="message__upper-info__talker">
@@ -59,12 +59,12 @@ $(document).on('turbolinks:load', function(){
       var last_message_id = $(".message").last().data("message");
       $.ajax({
         url: "api/messages",
-        type: 'get',
+        type: 'GET',
         dataType: 'json',
         data: {id: last_message_id}
       })
-      .done(function(messages) {
-        messages.forEach(function(message) {
+      .done(function(data) {
+        data.forEach(function(message) {
           $('.massages').append(buildHTML(message));
         })
         scroll();
