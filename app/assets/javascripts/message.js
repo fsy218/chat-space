@@ -58,7 +58,7 @@ $(document).on('turbolinks:load', function(){
     if (location.pathname.match(/\/groups\/\d+\/messages/)) {
       var last_message_id = $(".message").last().data("message");
       $.ajax({
-        url: "api/messages",
+        url: location.pathname,
         type: 'GET',
         dataType: 'json',
         data: {id: last_message_id}
@@ -66,8 +66,8 @@ $(document).on('turbolinks:load', function(){
       .done(function(data) {
         data.forEach(function(message) {
           $('.massages').append(buildHTML(message));
+          scroll();
         })
-        scroll();
       })
       .fail(function() {
         alert('自動更新に失敗しました');
