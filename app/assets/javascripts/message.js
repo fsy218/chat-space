@@ -26,8 +26,8 @@ $(document).on('turbolinks:load', function(){
 
   $('#new_message').on('submit', function(e){
     e.preventDefault();
-    var formData = new FormData(this)
-    var url = $(this).attr('action')
+    var formData = new FormData(this);
+    var url = $(this).attr('action');
     $.ajax({
       url: url,
       type: "POST",
@@ -57,7 +57,6 @@ $(document).on('turbolinks:load', function(){
   var autoupdate = setInterval(function() {
     if (location.pathname.match(/\/groups\/\d+\/messages/)) {
       var last_message_id = $(".message").last().data("message");
-      debugger;
       $.ajax({
         url: location.pathname,
         type: "GET",
