@@ -57,6 +57,7 @@ $(document).on('turbolinks:load', function(){
   var autoupdate = setInterval(function() {
     if (location.pathname.match(/\/groups\/\d+\/messages/)) {
       var last_message_id = $(".message").last().data("message");
+      debugger;
       $.ajax({
         url: location.pathname,
         type: "GET",
