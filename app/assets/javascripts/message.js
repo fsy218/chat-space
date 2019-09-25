@@ -1,4 +1,4 @@
-$(document).on(function(){
+$(function(){
   function buildHTML(message) {
     var img = message.image ? `<img class= "message__lower-info__image" src=${message.image} >` : "";
     var html = `<div class="message" data-message="${message.id}">
@@ -54,35 +54,38 @@ $(document).on(function(){
     })
   });
 
-  var autoupdate = setInterval(function() {
-    if (location.href.match(/\/groups\/\d+\/messages/)) {
-      var last_message_id = $(".message").last().data('message');
-      console.log(last_message_id);
-      $.ajax({
-        url: location.href,
-        type: "GET",
-        dataType: 'json',
-        data: {id: last_message_id}
+  var message_update_time = -1;
+  $(document).on('turbolinks:load', function() {
+    if (message_update_time > 0) {clearInterval(message_update_time);}
+    message_update_time = (location.href.match(/\/groups\/\d+\/messages/)) ? setInterval(message_update, 5000) : -1;
+  });
+
+
+  function message_update() {
+    var last_message_id = $(".message").last().data('message');
+    console.log(last_message_id);
+    $.ajax({
+      url: location.href,
+      type: "GET",
+      dataType: 'json',
+      data: {id: last_message_id}
+    })
+    .done(function(data) {
+      var insertHTML = "";
+      data.forEach(function(message) {
+        console.log(message);
+        insertHTML += buildHTML(message);
+        $('.massages').append(insertHTML);
       })
-      .done(function(data) {
-        var insertHTML = "";
-        data.forEach(function(message) {
-          insertHTML = buildHTML(message);
-          $('.massages').append(insertHTML);
-        })
-        scroll();
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        alert('自動更新に失敗しました');
-        // console.log("ajax通信に失敗しました");
-        // console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
-        // console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
-        // console.log("errorThrown    : " + errorThrown.message); // 例外情報
-      })
-    }
-    else {
-      clearInterval(interval);
-    }
-  }, 5000 )
+      scroll();
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      alert('自動更新に失敗しました');
+      // console.log("ajax通信に失敗しました");
+      // console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
+      // console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
+      // console.log("errorThrown    : " + errorThrown.message); // 例外情報
+    })
+  }
 });
 
