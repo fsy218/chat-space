@@ -33,17 +33,17 @@ $(function(){
       contentType: false
     })
     .done(function(send_message){
-      // if (send_message.length !== 0) {
+      if (send_message.length !== 0) {
       var html = buildHTML(send_message);
       $('.messages').append(html);
       $('.submit-btn').prop('disabled', false);
       $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'slow');
       $('#new_message')[0].reset();
-      // }
-      // else {
-      //   alert('メッセージを入力してください');
-      //   $('.submit-btn').prop('disabled', false);
-      // }
+      }
+      else {
+        alert('メッセージを入力してください');
+        $('.submit-btn').prop('disabled', false);
+      }
     })
     .fail(function(){
       alert('error');
@@ -52,8 +52,8 @@ $(function(){
 
   var messageUpdateTime = -1;
   $(document).on('turbolinks:load', function() {
-    messageUpdateTime = (location.href.match(/\/groups\/\d+\/messages/)) ? setInterval(message_update, 5000) : -1;
     if (messageUpdateTime > 0) {clearInterval(messageUpdateTime);}
+    messageUpdateTime = (location.href.match(/\/groups\/\d+\/messages/)) ? setInterval(message_update, 5000) : -1;
   });
 
 
