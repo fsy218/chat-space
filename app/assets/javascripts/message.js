@@ -1,7 +1,7 @@
 $(function(){
   function buildHTML(message) {
     img = message.image ? `<img class= "message__lower-info__image" src=${message.image} >` : "";
-    html = `<div class="message" data-message="${message.id}">
+    html = `<div class="message" data-id="${message.id}">
                   <div class="message__upper-info">
                     <div class="message__upper-info__talker">
                       ${message.name}
@@ -50,21 +50,21 @@ $(function(){
     })
   });
 
-  var message_update_time = -1;
+  var messageUpdateTime = -1;
   $(document).on('turbolinks:load', function() {
-    if (message_update_time > 0) {clearInterval(message_update_time);}
-    message_update_time = (location.href.match(/\/groups\/\d+\/messages/)) ? setInterval(message_update, 5000) : -1;
+    if (messageUpdateTime > 0) {clearInterval(messageUpdateTime);}
+    messageUpdateTime = (location.href.match(/\/groups\/\d+\/messages/)) ? setInterval(message_update, 5000) : -1;
   });
 
 
   function message_update() {
-    var last_message_id = $(".message__lower-info__image").last().data('message');
-    console.log(last_message_id);
+    var lastMessageId = $(".message").last().data('id');
+    console.log(lastMessageId);
     $.ajax({
       url: location.href,
       type: "GET",
       dataType: 'json',
-      data: {id: last_message_id}
+      data: {id: lastMessageId}
     })
     .done(function(data) {
       var insertHTML = "";
