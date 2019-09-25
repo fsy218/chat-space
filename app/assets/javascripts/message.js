@@ -62,7 +62,7 @@ $(function(){
 
 
   function message_update() {
-    var last_message_id = $(".message").last().data('message');
+    var last_message_id = $(".message__lower-info__image").last().data('message');
     console.log(last_message_id);
     $.ajax({
       url: location.href,
