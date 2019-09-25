@@ -52,8 +52,8 @@ $(function(){
 
   var messageUpdateTime = -1;
   $(document).on('turbolinks:load', function() {
-    if (messageUpdateTime > 0) {clearInterval(messageUpdateTime);}
     messageUpdateTime = (location.href.match(/\/groups\/\d+\/messages/)) ? setInterval(message_update, 5000) : -1;
+    if (messageUpdateTime > 0) {clearInterval(messageUpdateTime);}
   });
 
 
