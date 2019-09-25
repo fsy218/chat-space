@@ -1,7 +1,7 @@
 $(function(){
   function buildHTML(message) {
-    var img = message.image ? `<img class= "message__lower-info__image" src=${message.image} >` : "";
-    var html = `<div class="message" data-message="${message.id}">
+    img = message.image ? `<img class= "message__lower-info__image" src=${message.image} >` : "";
+    html = `<div class="message" data-message="${message.id}">
                   <div class="message__upper-info">
                     <div class="message__upper-info__talker">
                       ${message.name}
@@ -21,7 +21,7 @@ $(function(){
   }
 
   function scroll() {
-    $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast')
+    
   }
 
   $('#new_message').on('submit', function(e){
@@ -36,12 +36,12 @@ $(function(){
       processData: false,
       contentType: false
     })
-    .done(function(data){
-      if (data.length !== 0) {
-      var html = buildHTML(data);
+    .done(function(send_message){
+      if (send_message.length !== 0) {
+      var html = buildHTML(send_message);
       $('.messages').append(html);
       $('.submit-btn').prop('disabled', false);
-      scroll();
+      $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'slow');
       $('#new_message')[0].reset();
       }
       else {
@@ -73,11 +73,9 @@ $(function(){
     .done(function(data) {
       var insertHTML = "";
       data.forEach(function(message) {
-        console.log(message);
         insertHTML += buildHTML(message);
         $('.massages').append(insertHTML);
-      })
-      scroll();
+      });
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
       alert('自動更新に失敗しました');
@@ -85,7 +83,7 @@ $(function(){
       // console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
       // console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
       // console.log("errorThrown    : " + errorThrown.message); // 例外情報
-    })
+    });
   }
 });
 
