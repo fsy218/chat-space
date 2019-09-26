@@ -67,7 +67,7 @@ $(function(){
         url: 'api/messages',
         type: "GET",
         dataType: 'json',
-        data: {id: lastMessageId}
+        data: {id: last_message_id}
       })
       .done(function(messages) {
         debugger;
