@@ -61,8 +61,8 @@ $(document).on('turbolinks:load', function(){
   // function message_update() {
   var reloadMessages = function () {
     if (window.location.href.match(/\/groups\/\d+\/messages/)){//今いるページのリンクが/groups/グループID/messagesのパスとマッチすれば以下を実行。
-      var last_message_id = $('.message:last').data("message-id"); 
-    // var lastMessageId = $(".message").last().data('id');
+      var last_message_id = $('.message:last').data("id"); 
+    // var last_message_id = $(".message").last().data('id');
       $.ajax({
         url: 'api/messages',
         type: "GET",
