@@ -74,7 +74,7 @@ $(document).on('turbolinks:load', function(){
         var insertHTML = '';
         messages.forEach(function(message) {
           insertHTML = buildHTML(message);
-          $('.massages').append(insertHTML);
+          $('.messages').append(insertHTML);
         });
         $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'slow')
       })
